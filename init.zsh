@@ -35,5 +35,5 @@ function dcc() {
   fi
 }
 
-. <(gr completion)
+# . <(gr completion)
 source "$HOME/.console/console.rc" 2>/dev/null
