@@ -1,3 +1,6 @@
+# unalias some stuff
+unalias gr
+
 # much better
 alias gcm='git commit -m'
 alias glog="git log --oneline --decorate --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
