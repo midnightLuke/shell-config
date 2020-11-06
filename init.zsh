@@ -4,7 +4,7 @@ unalias gr
 # much better
 alias glog="git log --oneline --decorate --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 alias gst="git status"
-alias la='exa -alh --tree --level=2'
+alias la='exa -alh --tree --level=2 --git-ignore --git --ignore-glob=".git|vendor|node_modules"'
 alias d='drush'
 alias dy='drush -y'
 alias console=bin/console
