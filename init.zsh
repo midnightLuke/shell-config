@@ -2,41 +2,39 @@
 unalias gr
 
 # much better
-alias gcm='git commit -m'
 alias glog="git log --oneline --decorate --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 alias gst="git status"
-alias la='ls -alh'
-alias s='subl'
+alias la='exa -alh --tree --level=2'
 alias d='drush'
 alias dy='drush -y'
 alias console=bin/console
 alias c=bin/console
-alias sf2=app/console
-alias sf=app/console
 
 # el capitan dns flush shortcut
 alias dnsflush='sudo echo "Flushing DNS caches...";sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;'
 
-# Clear Drupal caches. In Drupal 8 with our dotfiles `d cr` is pretty short but
-# many of us are very accustomed to `dcc`.
-function dcc() {
-  echo "Clearing all caches..."
-  local DRUPAL_VERSION="$(drush php-eval 'echo drush_drupal_major_version();')"
-  if [ ! $DRUPAL_VERSION ]; then
-    echo "No Drupal installation found."
-    return 1
+function drushdb() {
+  if [ "$#" -ne 1 ]; then
+    echo "Imports a database dump into the current Drupal installation."
+    echo
+    echo "Usage: drushdb [.sql.gz or .sql]"
+    echo "e.g. drushdb ~/path/to/mybackup.sql.gz"
+    return
   fi
 
-  # Supports Drupal 6 through 8.
-  if [ $DRUPAL_VERSION -gt 5 -a $DRUPAL_VERSION -lt 8 ]; then
-    drush cc all
-  elif [ $DRUPAL_VERSION == 8 ]; then
-    drush cr
+  if file "$1" | grep -q "gzip compressed data"; then
+    pv "$1" | gunzip -c | `drush sql-connect`
   else
-    echo "Drupal $DRUPAL_VERSION is not supported."
-    return 1
+    pv "$1" | `drush sql-connect`
   fi
 }
 
-# . <(gr completion)
-source "$HOME/.console/console.rc" 2>/dev/null
+# Load rupa's z if installed
+[ -f $(brew --prefix)/etc/profile.d/z.sh ] && source $(brew --prefix)/etc/profile.d/z.sh
+
+# Kubectl autocomplete.
+source <(kubectl completion zsh)
+
+# Composer is a memory hog.
+export COMPOSER_MEMORY_LIMIT=-1
+
