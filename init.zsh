@@ -13,6 +13,8 @@ alias pclf="podman-compose logs -f"
 alias pcl="podman-compose logs"
 alias pce="podman-compose exec"
 alias pcr="podman-compose run"
+alias pcupd="podman-compose up -d"
+alias pcdn="podman-compose down"
 
 # macos dns flush shortcut
 alias dnsflush='sudo echo "Flushing DNS caches...";sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;'
